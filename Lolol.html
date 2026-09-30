@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLACT Care - Property, Lawn, Auto, Curbside & Trash</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brandRed: '#dc2626',
+                        brandDarkRed: '#991b1b',
+                        brandBlack: '#0a0a0a',
+                        brandGray: '#171717',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #0a0a0a; color: #f5f5f5; }
+        .glass-card { background: rgba(23, 23, 23, 0.85); backdrop-filter: blur(8px); border: 1px solid #262626; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between font-sans">
+
+    <!-- HEADER / NAV -->
+    <header class="p-4 border-b border-zinc-800 bg-brandBlack sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-black tracking-wider text-white">
+                <span class="text-brandRed">PLACT</span> <span class="text-sm font-normal text-zinc-400">Care</span>
+            </h1>
+            <div class="flex items-center gap-2">
+                <button id="langToggleBtn" onclick="toggleLanguage()" class="bg-zinc-800 hover:bg-zinc-700 text-xs px-3 py-1.5 rounded-md border border-zinc-700 transition">
+                    <i class="fa-solid fa-globe mr-1 text-brandRed"></i> <span id="langBtnText">Español</span>
+                </button>
+                <button onclick="openAdminModal()" class="bg-brandRed hover:bg-brandDarkRed text-white text-xs px-3 py-1.5 rounded-md font-semibold transition">
+                    <i class="fa-solid fa-lock mr-1"></i> Admin
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="p-6 text-center max-w-2xl mx-auto my-4">
+        <h2 id="heroTitle" class="text-3xl font-extrabold mb-2 text-white">
+            Premium Residential <span class="text-brandRed">PLACT Care</span>
+        </h2>
+        <p id="heroSubtitle" class="text-zinc-400 text-sm mb-6">
+            Pool, Lawn, Auto, Curbside Valet, and Trash Bin Sanitizing in Krebs & surrounding areas.
+        </p>
+
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-3">
+            <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-2.5 w-full sm:w-auto text-xs font-medium text-emerald-400 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-money-bill-wave"></i> Cash & Cash App Accepted
+            </div>
+            <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-2.5 w-full sm:w-auto text-xs font-medium text-zinc-300 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-wallet text-brandRed"></i> Cash App Tag: <span class="font-bold text-white">$LoganLeFlore</span>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <a href="tel:9184704748" class="inline-flex items-center gap-2 bg-brandRed hover:bg-brandDarkRed text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-lg transition">
+                <i class="fa-solid fa-phone"></i> (918) 470-4748
+            </a>
+        </div>
+    </section>
+
+    <!-- SERVICES LIST WITH MULTI-SELECT -->
+    <main class="max-w-4xl mx-auto px-4 flex-1 w-full space-y-4 mb-8">
+        <h3 id="servicesHeading" class="text-xl font-bold text-center mb-1 text-zinc-200">Our Services & Pricing</h3>
+        <p id="multiSelectHint" class="text-xs text-center text-zinc-400 mb-4">Select one or multiple services below:</p>
+
+        <!-- Service Options Checklist -->
+        <div class="space-y-3">
+            <!-- Service 1: Pool -->
+            <label class="glass-card p-4 rounded-xl flex items-start gap-3 cursor-pointer hover:border-brandRed transition block">
+                <input type="checkbox" value="Pool Care" data-price="95" onchange="updateServiceSelection()" class="service-checkbox mt-1 w-5 h-5 accent-red-600 rounded">
+                <div class="flex-1">
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold text-white"><span class="text-brandRed font-black">P</span>ool Care</span>
+                        <span class="text-xl font-black text-white">$95</span>
+                    </div>
+                    <p id="descPool" class="text-xs text-zinc-400 mt-1">Skimming, vacuuming, wall brushing, leaf clearing, and water surface detailing for a crystal-clear pool.</p>
+                </div>
+            </label>
+
+            <!-- Service 2: Lawn -->
+            <label class="glass-card p-4 rounded-xl flex items-start gap-3 cursor-pointer hover:border-brandRed transition block">
+                <input type="checkbox" value="Lawn Care" data-price="75" onchange="updateServiceSelection()" class="service-checkbox mt-1 w-5 h-5 accent-red-600 rounded">
+                <div class="flex-1">
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold text-white"><span class="text-brandRed font-black">L</span>awn Care</span>
+                        <span class="text-xl font-black text-white">$75</span>
+                    </div>
+                    <p id="descLawn" class="text-xs text-zinc-400 mt-1">Full yard mowing, precise edge trimming along driveways & walkways, and power blowing clean up.</p>
+                </div>
+            </label>
+
+            <!-- Service 3: Auto -->
+            <label class="glass-card p-4 rounded-xl flex items-start gap-3 cursor-pointer hover:border-brandRed transition block">
+                <input type="checkbox" value="Auto Detailing" data-price="150" onchange="updateServiceSelection()" class="service-checkbox mt-1 w-5 h-5 accent-red-600 rounded">
+                <div class="flex-1">
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold text-white"><span class="text-brandRed font-black">A</span>uto Detailing</span>
+                        <span class="text-xl font-black text-white">$150</span>
+                    </div>
+                    <p id="descAuto" class="text-xs text-zinc-400 mt-1">Exterior foam hand wash, dirt/mud scrub, tire shine, deep interior vacuuming, and wipe-down right in your driveway.</p>
+                </div>
+            </label>
+
+            <!-- Service 4: Curbside -->
+            <label class="glass-card p-4 rounded-xl flex items-start gap-3 cursor-pointer hover:border-brandRed transition block">
+                <input type="checkbox" value="Curbside Trash Valet" data-price="5" onchange="updateServiceSelection()" class="service-checkbox mt-1 w-5 h-5 accent-red-600 rounded">
+                <div class="flex-1">
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold text-white"><span class="text-brandRed font-black">C</span>urbside Trash Valet</span>
+                        <span class="text-xl font-black text-white">$5</span>
+                    </div>
+                    <p id="descCurbside" class="text-xs text-zinc-400 mt-1">Never miss trash day again. We roll your trash and recycling bins out to the curb on pickup night and return them back.</p>
+                </div>
+            </label>
+
+            <!-- Service 5: Trash Bin Sanitizing -->
+            <label class="glass-card p-4 rounded-xl flex items-start gap-3 cursor-pointer hover:border-brandRed transition block">
+                <input type="checkbox" value="Trash Bin Sanitizing" data-price="15" onchange="updateServiceSelection()" class="service-checkbox mt-1 w-5 h-5 accent-red-600 rounded">
+                <div class="flex-1">
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold text-white"><span class="text-brandRed font-black">T</span>rash Bin Sanitizing</span>
+                        <span class="text-xl font-black text-white">$15</span>
+                    </div>
+                    <p id="descTrash" class="text-xs text-zinc-400 mt-1">High-pressure interior & exterior bin washing, eco-friendly disinfectant sanitizing, and deodorizing treatment.</p>
+                </div>
+            </label>
+        </div>
+
+        <!-- SELECTED SERVICES SUMMARY -->
+        <div class="glass-card p-4 rounded-xl bg-zinc-900 flex justify-between items-center">
+            <div>
+                <span id="selectedSummaryLabel" class="text-xs text-zinc-400 block">Selected Services:</span>
+                <span id="selectedServicesText" class="text-sm font-bold text-white">None selected</span>
+            </div>
+            <div class="text-right">
+                <span id="totalPriceLabel" class="text-xs text-zinc-400 block">Estimated Total:</span>
+                <span id="totalPriceText" class="text-xl font-black text-emerald-400">$0</span>
+            </div>
+        </div>
+
+        <!-- CALENDAR SECTION -->
+        <div class="glass-card p-4 rounded-xl mt-8">
+            <div class="flex justify-between items-center mb-3">
+                <h4 id="calHeading" class="text-lg font-bold text-white">Availability Calendar</h4>
+                <div class="flex gap-2">
+                    <button onclick="changeMonth(-1)" class="px-2 py-1 bg-zinc-800 text-xs text-white rounded hover:bg-zinc-700">&lt;</button>
+                    <span id="calMonthYear" class="text-xs font-bold text-zinc-300 self-center"></span>
+                    <button onclick="changeMonth(1)" class="px-2 py-1 bg-zinc-800 text-xs text-white rounded hover:bg-zinc-700">&gt;</button>
+                </div>
+            </div>
+
+            <p id="calSubtext" class="text-xs text-zinc-400 mb-3">Click an available green day to request an appointment.</p>
+
+            <div class="calendar-grid text-center font-bold text-xs text-zinc-500 mb-2">
+                <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+            </div>
+            <div id="calendarDays" class="calendar-grid text-xs"></div>
+
+            <div class="flex items-center justify-center gap-4 mt-4 text-xs text-zinc-400">
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> <span id="legendAvailable">Available</span></span>
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-brandRed inline-block"></span> <span id="legendBooked">Booked</span></span>
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-zinc-700 inline-block"></span> <span id="legendPassed">Passed</span></span>
+            </div>
+        </div>
+    </main>
+
+    <!-- CUSTOMER BOOKING MODAL -->
+    <div id="bookingModal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 hidden">
+        <div class="glass-card bg-zinc-900 border border-zinc-700 p-6 rounded-2xl w-full max-w-md space-y-4">
+            <div class="flex justify-between items-center border-b border-zinc-800 pb-3">
+                <h3 class="text-lg font-bold text-white">Complete Booking Request</h3>
+                <button onclick="closeBookingModal()" class="text-zinc-400 hover:text-white">&times;</button>
+            </div>
+            <p id="modalDateServiceSummary" class="text-xs text-brandRed font-semibold"></p>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs text-zinc-400 mb-1">Full Name</label>
+                    <input type="text" id="custName" placeholder="Your Name" class="w-full bg-zinc-800 border border-zinc-700 rounded p-2 text-sm text-white focus:outline-none focus:border-brandRed">
+                </div>
+                <div>
+                    <label class="block text-xs text-zinc-400 mb-1">Phone Number</label>
+                    <input type="tel" id="custPhone" placeholder="(918) 000-0000" class="w-full bg-zinc-800 border border-zinc-700 rounded p-2 text-sm text-white focus:outline-none focus:border-brandRed">
+                </div>
+                <div>
+                    <label class="block text-xs text-zinc-400 mb-1">Street / Service Address</label>
+                    <input type="text" id="custAddress" placeholder="123 Main St, Krebs, OK" class="w-full bg-zinc-800 border border-zinc-700 rounded p-2 text-sm text-white focus:outline-none focus:border-brandRed">
+                </div>
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button onclick="submitBooking()" class="flex-1 bg-brandRed hover:bg-brandDarkRed text-white py-2 rounded-lg font-bold text-xs transition">Confirm & Book</button>
+                <button onclick="closeBookingModal()" class="px-4 bg-zinc-800 text-zinc-400 rounded-lg text-xs hover:bg-zinc-700">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN MODAL -->
+    <div id="adminModal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 hidden">
+        <div class="glass-card bg-zinc-900 border border-zinc-700 p-6 rounded-2xl w-full max-w-md space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-zinc-800 pb-3">
+                <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-shield-halved text-brandRed mr-2"></i>Admin Dashboard</h3>
+                <button onclick="closeAdminModal()" class="text-zinc-400 hover:text-white">&times;</button>
+            </div>
+
+            <!-- Login Prompt -->
+            <div id="adminLoginView" class="space-y-3">
+                <p class="text-xs text-zinc-400">Enter your admin password to manage bookings and toggle date availability:</p>
+                <input type="password" id="adminPassInput" placeholder="Password (default: admin)" class="w-full bg-zinc-800 border border-zinc-700 rounded p-2 text-sm text-white">
+                <button onclick="verifyAdminPass()" class="w-full bg-brandRed hover:bg-brandDarkRed text-white py-2 rounded-lg font-bold text-xs">Unlock Admin Portal</button>
+            </div>
+
+            <!-- Admin Panel Content -->
+            <div id="adminPanelView" class="hidden space-y-4">
+                <div class="p-3 bg-emerald-950/50 border border-emerald-800 rounded-lg text-xs text-emerald-300">
+                    <i class="fa-solid fa-circle-info mr-1"></i> Mode Active: Click any green calendar date to toggle it to <strong>Booked (Red)</strong> or back.
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-white mb-2">Submitted Bookings:</h4>
+                    <div id="adminBookingsList" class="space-y-2 text-xs text-zinc-300">
+                        <!-- Dynamically Populated -->
+                    </div>
+                </div>
+                <button onclick="closeAdminModal()" class="w-full bg-zinc-800 text-white py-2 rounded-lg font-bold text-xs hover:bg-zinc-700">Close Admin</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="p-6 text-center border-t border-zinc-800 bg-brandBlack text-xs text-zinc-500 space-y-2">
+        <p>&copy; 2026 PLACT Care. Property, Lawn, Auto, Curbside Valet & Trash Bin Sanitizing.</p>
+        <p>Krebs, Oklahoma | Call / Text: <a href="tel:9184704748" class="text-brandRed hover:underline">(918) 470-4748</a> | Cash & Cash App ($LoganLeFlore)</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        let currentLang = 'en';
+        let currentDate = new Date();
+        let selectedDayForBooking = null;
+        let isAdminLoggedIn = false;
+
+        // In-memory store for booked dates & customer details
+        let bookedDates = {}; // e.g., { "2026-9-15": { name: "...", phone: "...", address: "...", services: "...", total: "$100" } }
+
+        const translations = {
+            en: {
+                langLabel: 'Español',
+                heroTitle: 'Premium Residential <span class="text-brandRed">PLACT Care</span>',
+                heroSubtitle: 'Pool, Lawn, Auto, Curbside Valet, and Trash Bin Sanitizing in Krebs & surrounding areas.',
+                servicesHeading: 'Our Services & Pricing',
+                multiSelectHint: 'Select one or multiple services below:',
+                calHeading: 'Availability Calendar',
+                calSubtext: 'Click an available green day to request an appointment.',
+                legendAvailable: 'Available',
+                legendBooked: 'Booked',
+                legendPassed: 'Passed',
+                selectedSummaryLabel: 'Selected Services:',
+                totalPriceLabel: 'Estimated Total:',
+                descPool: 'Skimming, vacuuming, wall brushing, leaf clearing, and water surface detailing for a crystal-clear pool.',
+                descLawn: 'Full yard mowing, precise edge trimming along driveways & walkways, and power blowing clean up.',
+                descAuto: 'Exterior foam hand wash, dirt/mud scrub, tire shine, deep interior vacuuming, and wipe-down right in your driveway.',
+                descCurbside: 'Never miss trash day again. We roll your trash and recycling bins out to the curb on pickup night and return them back.',
+                descTrash: 'High-pressure interior & exterior bin washing, eco-friendly disinfectant sanitizing, and deodorizing treatment.'
+            },
+            es: {
+                langLabel: 'English',
+                heroTitle: 'Cuidado Residencial Premium <span class="text-brandRed">PLACT Care</span>',
+                heroSubtitle: 'Piscina, Césped, Auto, Valet de Basura y Sanitización de Botes en Krebs y áreas cercanas.',
+                servicesHeading: 'Nuestros Servicios y Precios',
+                multiSelectHint: 'Seleccione uno o varios servicios a continuación:',
+                calHeading: 'Calendario de Disponibilidad',
+                calSubtext: 'Haga clic en un día verde disponible para solicitar una cita.',
+                legendAvailable: 'Disponible',
+                legendBooked: 'Reservado',
+                legendPassed: 'Pasado',
+                selectedSummaryLabel: 'Servicios Seleccionados:',
+                totalPriceLabel: 'Total Estimado:',
+                descPool: 'Limpieza de superficie, aspirado, cepillado de paredes y tratamiento de agua para una piscina cristalina.',
+                descLawn: 'Corte de césped completo, perfilado preciso en entradas y caminos, y limpieza con sopladora.',
+                descAuto: 'Lavado a mano con espuma, cepillado de neumáticos, aspirado interior profundo y limpieza completa.',
+                descCurbside: 'No vuelva a olvidar el día de basura. Sacamos sus botes a la acera y los regresamos a su lugar.',
+                descTrash: 'Lavado a presión interior y exterior de botes de basura, desinfección ecológica y desodorización.'
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'es' : 'en';
+            const t = translations[currentLang];
+
+            document.getElementById('langBtnText').innerText = t.langLabel;
+            document.getElementById('heroTitle').innerHTML = t.heroTitle;
+            document.getElementById('heroSubtitle').innerText = t.heroSubtitle;
+            document.getElementById('servicesHeading').innerText = t.servicesHeading;
+            document.getElementById('multiSelectHint').innerText = t.multiSelectHint;
+            document.getElementById('calHeading').innerText = t.calHeading;
+            document.getE
