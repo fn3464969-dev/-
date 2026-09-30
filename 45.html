@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P.L.A.C.T. CARE - Property Maintenance Specialist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brandRed: '#dc2626',
+                        brandDarkRed: '#991b1b',
+                        brandBlack: '#0a0a0a',
+                        brandGray: '#171717',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        html { scroll-behavior: smooth; }
+        body { background-color: #0a0a0a; color: #f5f5f5; font-family: system-ui, -apple-system, sans-serif; }
+        .glass-card { background: #121212; border: 1px solid #262626; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between font-sans">
+
+    <!-- HEADER / NAV -->
+    <header class="p-4 border-b border-zinc-800 bg-brandBlack sticky top-0 z-40">
+        <div class="max-w-xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="bg-brandRed text-white font-black text-xl px-2.5 py-1 rounded-lg">P</div>
+                <div>
+                    <h1 class="text-xl font-black tracking-widest text-white leading-none">P.L.A.C.T.</h1>
+                    <span class="text-xs font-bold text-brandRed tracking-widest">CARE</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="langBtn" class="bg-zinc-800 hover:bg-zinc-700 text-xs text-white px-3 py-1.5 rounded-full border border-zinc-700 flex items-center gap-1.5 font-semibold transition">
+                    <i class="fa-solid fa-globe text-zinc-400"></i> <span id="langBtnText">ESPAÑOL</span>
+                </button>
+                <button id="adminBtn" class="bg-zinc-800 hover:bg-zinc-700 text-xs text-white px-3 py-1.5 rounded-full border border-zinc-700 flex items-center gap-1.5 font-semibold transition">
+                    <i class="fa-solid fa-user-shield text-brandRed"></i> Admin
+                </button>
+                <button id="navBookBtn" class="bg-brandRed hover:bg-brandDarkRed text-white text-xs px-3 py-1.5 rounded-md font-bold uppercase tracking-wider transition">
+                    Book Now
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="p-6 max-w-xl mx-auto text-center space-y-4">
+        <div class="bg-emerald-950/80 border border-emerald-800/80 text-emerald-400 text-xs py-2 px-3 rounded-full inline-flex items-center gap-2 font-medium">
+            <i class="fa-solid fa-circle-check"></i> <span id="paymentBanner">Payment Accepted: Cash Only or Cash App: <span class="font-bold underline">$LoganLeFlore</span></span>
+        </div>
+
+        <h2 id="heroTitle" class="text-2xl font-black uppercase tracking-tight text-white leading-tight">
+            Professional Home & Auto <span class="text-brandRed">Detailing Services</span>
+        </h2>
+
+        <p id="heroSubtitle" class="text-xs text-zinc-400 max-w-md mx-auto leading-relaxed">
+            Residential pool restoring, precision lawn striping, high-gloss auto detailing, and sanitized curb & bin valeting. Real quality, real transformations.
+        </p>
+
+        <div class="flex flex-col gap-2 pt-2">
+            <a href="tel:9184704748" class="bg-brandRed hover:bg-brandDarkRed text-white py-2.5 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition">
+                <i class="fa-solid fa-phone"></i> <span id="callText">Questions? Call or Text: (918) 470-4748</span>
+            </a>
+            <button id="heroCalBtn" class="bg-zinc-900 border border-zinc-700 hover:border-brandRed text-white py-2.5 px-4 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition">
+                <i class="fa-solid fa-calendar-days text-brandRed"></i> <span id="checkCalBtn">Check Availability Calendar</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- CORE SERVICES & PRICING -->
+    <main class="max-w-xl mx-auto px-4 w-full space-y-4 mb-8">
+        <div class="border-t border-zinc-800 pt-6">
+            <h3 id="servicesHeader" class="text-lg font-black tracking-wider uppercase text-center text-white">Core Services & Pricing</h3>
+            <p id="servicesSubtext" class="text-xs text-center text-zinc-500 mb-4">Click any service button below to instantly pick your service and start booking.</p>
+        </div>
+
+        <div class="space-y-4">
+            <!-- Pool Care -->
+            <div class="glass-card p-4 rounded-2xl space-y-2 hover:border-zinc-700 transition">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-xs font-bold text-brandRed">P - POOL CARE</span>
+                        <h4 id="titlePool" class="text-base font-bold text-white">Pool Restoration & Care</h4>
+                    </div>
+                    <span class="text-lg font-black text-brandRed">$95</span>
+                </div>
+                <p id="descPool" class="text-xs text-zinc-400">Complete chemical shock balance, green algae scrubbing, floor vacuuming, and pump/filter deep backwashing.</p>
+                <button data-service="Pool Care" class="service-book-btn w-full bg-brandRed hover:bg-brandDarkRed text-white py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition active:scale-95 shadow-md">
+                    <i class="fa-solid fa-calendar-check"></i> <span id="btnPool">Book Pool Care ($95)</span>
+                </button>
+            </div>
+
+            <!-- Lawn Care -->
+            <div class="glass-card p-4 rounded-2xl space-y-2 hover:border-zinc-700 transition">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-xs font-bold text-brandRed">L - LAWN CARE</span>
+                        <h4 id="titleLawn" class="text-base font-bold text-white">Precision Striping & Edging</h4>
+                    </div>
+                    <span class="text-lg font-black text-brandRed">$75</span>
+                </div>
+                <p id="descLawn" class="text-xs text-zinc-400">Overgrowth cutting, crisp sidewalk & driveway razor edging, yard debris blowing, and custom aesthetic striping.</p>
+                <button data-service="Lawn Care" class="service-book-btn w-full bg-brandRed hover:bg-brandDarkRed text-white py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition active:scale-95 shadow-md">
+                    <i class="fa-solid fa-calendar-check"></i> <span id="btnLawn">Book Lawn Care ($75)</span>
+                </button>
+            </div>
+
+            <!-- Auto Detailing -->
+            <div class="glass-card p-4 rounded-2xl space-y-2 hover:border-zinc-700 transition">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-xs font-bold text-brandRed">A - AUTO DETAILING</span>
+                        <h4 id="titleAuto" class="text-base font-bold text-white">Driveway SUV Deep Detail</h4>
+                    </div>
+                    <span class="text-lg font-black text-brandRed">$150</span>
+                </div>
+                <p id="descAuto" class="text-xs text-zinc-400">Full foam cannon pressure wash, rim brake-dust removal, tire shine coating, interior deep vacuum, & window clarity polish.</p>
+                <button data-service="Auto Detailing" class="service-book-btn w-full bg-brandRed hover:bg-brandDarkRed text-white py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition active:scale-95 shadow-md">
+                    <i class="fa-solid fa-car"></i> <span id="btnAuto">Book Auto Detail ($150)</span>
+                </button>
+            </div>
+
+            <!-- Trash Bin -->
+            <div class="glass-card p-4 rounded-2xl space-y-2 hover:border-zinc-700 transition">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-xs font-bold text-brandRed">T - TRASH BIN</span>
+                        <h4 id="titleTrash" class="text-base font-bold text-white">Interior Bin Sanitizing</h4>
+                    </div>
+                    <span class="text-lg font-black text-brandRed">$15</span>
+                </div>
+                <p id="descTrash" class="text-xs text-zinc-400">200° hot high-pressure interior wash, grime removal, and deodorizing disinfectant blast.</p>
+                <button data-service="Trash Bin Sanitizing" class="service-book-btn w-full bg-brandRed hover:bg-brandDarkRed text-white py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition active:scale-95 shadow-md">
+                    <i class="fa-solid fa-trash"></i> <span id="btnTrash">Bin Wash ($15)</span>
+                </button>
+            </div>
+
+            <!-- Curbside Valet -->
+            <div class="glass-card p-4 rounded-2xl space-y-2 hover:border-zinc-700 transition">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-xs font-bold text-brandRed">C - CURBSIDE VALET</span>
+                        <h4 id="titleCurb" class="text-base font-bold text-white">Curbside Trash Bin Service</h4>
+                    </div>
+                    <span class="text-lg font-black text-brandRed">$5</span>
+                </div>
+                <p id="descCurb" class="text-xs text-zinc-400">Weekly scheduled bin pull-out to the curb on collection day and return back to your home/garage area after pickup.</p>
+                <button data-service="Curbside Trash Valet" class="service-book-btn w-full bg-brandRed hover:bg-brandDarkRed text-white py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition active:scale-95 shadow-md">
+                    <i class="fa-solid fa-dumpster"></i> <span id="btnCurb">Curb Valet ($5)</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- FULL CALENDAR & BOOKING SECTION -->
+        <div id="calendarSection" class="pt-8 scroll-mt-20">
+            <div class="glass-card p-6 rounded-2xl border-2 border-brandRed/50 space-y-6">
+                <!-- STEP 1 -->
+                <div class="text-center space-y-1">
+                    <span class="text-xs font-black uppercase text-brandRed tracking-widest">STEP 1: CHOOSE YOUR DAY</span>
+                    <h3 id="calHeader" class="text-xl font-black uppercase text-white">Interactive Schedule Calendar</h3>
+                    <p id="calSubtext" class="text-xs text-zinc-400">Click any GREEN day to set your booking date.</p>
+                </div>
+
+                <div class="flex items-center justify-center gap-4 text-[10px] uppercase font-bold tracking-wider">
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-emerald-500"></span> <span id="legendGreen">GREEN = FREE</span></span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-brandRed"></span> <span id="legendRed">RED = BOOKED</span></span>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center bg-zinc-900 p-2 rounded-xl border border-zinc-800">
+                        <button id="prevMonthBtn" class="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg text-xs font-bold transition">&lt; Prev</button>
+                        <span id="calMonthYear" class="text-sm font-black uppercase text-white tracking-widest">DECEMBER 2026</span>
+                        <button id="nextMonthBtn" class="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg text-xs font-bold transition">Next &gt;</button>
+                    </div>
+
+                    <div class="calendar-grid text-center font-bold text-[10px] text-zinc-500 uppercase">
+                        <div>SUN</div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div>
+                    </div>
+
+                    <div id="calendarDays" class="calendar-grid text-xs"></div>
+                </div>
+
+                <!-- STEP 2: DETAILS & FORM -->
+                <div id="bookingFormSection" class="border-t border-zinc-800 pt-6 space-y-4 scroll-mt-24">
+                    <div class="text-center space-y-1">
+                        <span class="text-xs font-black uppercase text-brandRed tracking-widest">STEP 2: ENTER CONTACT & CONFIRM</span>
+                        <h4 class="text-lg font-black text-white" id="formDateNotice">Selected Date: <span class="text-brandRed" id="displaySelectedDate">Please select a green date above</span></h4>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div>
+                            <label id="lblSelectService" class="block text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-1">SELECTED SERVICES (CHECK ALL THAT APPLY)</label>
+                            <div class="space-y-2 bg-zinc-900 p-3 rounded-xl border border-zinc-800">
+                                <label class="flex items-center justify-between text-xs text-white cursor-pointer py-1 border-b border-zinc-800/60">
+                                    <span>Pool Care ($95)</span>
+                                    <input type="checkbox" id="check-Pool Care" value="Pool Care" data-price="95" class="service-check accent-red-600 w-4 h-4 cursor-pointer">
+                                </label>
+                                <label class="flex items-center justify-between text-xs text-white cursor-pointer py-1 border-b border-zinc-800/60">
+                                    <span>Lawn Care ($75)</span>
+                                    <input type="checkbox" id="check-Lawn Care" value="Lawn Care" data-price="75" class="service-check accent-red-600 w-4 h-4 cursor-pointer">
+                                </label>
+                                <label class="flex items-center justify-between text-xs text-white cursor-pointer py-1 border-b border-zinc-800/60">
+                                    <span>Auto Detailing ($150)</span>
+                                    <input type="checkbox" id="check-Auto Detailing" value="Auto Detailing" data-price="150" class="service-check accent-red-600 w-4 h-4 cursor-pointer">
+                                </label>
+                                <label class="flex items-center justify-between text-xs text-white cursor-pointer py-1 border-b border-zinc-800/60">
+                                    <span>Trash Bin Sanitizing ($15)</span>
+                                    <input type="checkbox" id="check-Trash Bin Sanitizing" value="Trash Bin Sanitizing" data-price="15" class="service-check accent-red-600 w-4 h-4 cursor-pointer">
+                                </label>
+                                <label class="flex items-center justify-between text-xs text-white cursor-pointer py-1">
+                                    <span>Curbside Trash Valet ($5)</span>
+                                    <input type="checkbox" id="check-Curbside Trash Valet" value="Curbside Trash Valet" data-price="5" class="service-check accent-red-600 w-4 h-4 cursor-pointer">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center bg-zinc-900 p-3.5 rounded-xl border border-zinc-800 text-xs">
+                            <span class="font-bold text-zinc-400">ESTIMATED TOTAL:</span>
+                            <span id="calculatedPrice" class="text-2xl font-black text-brandRed">$0</span>
+                        </div>
+
+                        <div>
+                            <label id="lblName" class="block text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-1">YOUR FULL NAME</label>
+                            <input type="text" id="custName" placeholder="John Doe" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-brandRed transition">
+                        </div>
+
+                        <div>
+                            <label id="lblPhone" class="block text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-1">PHONE NUMBER</label>
+                            <input type="tel" id="custPhone" placeholder="(918) 000-0000" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-brandRed transition">
+                        </div>
+
+                        <div>
+                            <label id="lblAddress" class="block text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-1">SERVICE ADDRESS</label>
+                            <input type="text" id="custAddress" placeholder="123 Main St, Area" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-brandRed transition">
+                        </div>
+
+                        <button id="submitBookingBtn" class="w-full bg-brandRed hover:bg-brandDarkRed text-white py-3.5 rounded-xl font-black text-sm uppercase tracking-wider shadow-lg active:scale-95 transition">
+                            SUBMIT APPOINTMENT REQUEST
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAYMENT INSTRUCTIONS CARD -->
+        <div class="glass-card p-6 rounded-2xl text-center space-y-3 mt-8">
+            <div class="w-8 h-8 bg-brandRed/20 text-brandRed rounded-xl flex items-center justify-center mx-auto text-lg">
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+            <h4 id="payHeader" class="text-base font-black uppercase text-white tracking-wider">Payment Instructions</h4>
+            <p id="paySubtext" class="text-xs text-zinc-400">We keep pricing honest and direct. All service balances are due upon job completion at your location.</p>
+            <div class="bg-zinc-900 border border-brandRed/40 p-4 rounded-xl">
+                <span class="text-xs font-black uppercase tracking-wider text-white block mb-1">CASH ONLY OR CASH APP</span>
+                <span class="text-xl font-black text-brandRed">$LoganLeFlore</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- ADMIN MODAL -->
+    <div id="adminModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
+        <div class="glass-card bg-zinc-950 border border-zinc-800 p-6 rounded-2xl w-full max-w-md space-y-4">
+            <div class="flex justify-between items-center border-b border-zinc-800 pb-3">
+                <button id="closeAdminBtn" class="text-xs text-zinc-400 hover:text-white transition">&larr; Back</button>
+                <span class="text-xs font-black uppercase tracking-wider text-brandRed">ADMIN LOGIN</span>
+            </div>
+
+            <div id="adminAuthView" class="space-y-4">
+                <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-1">PASSWORD REQUIRED</label>
+                    <input type="password" id="adminPasswordInput" placeholder="Enter password" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-white focus:out// State Variables
+let currentLang = 'en';
+let displayDate = new Date(2026, 11, 1); // December 2026 default
+let selectedDayKey = null;
+let isAdminLoggedIn = false;
+let bookedDates = {};
+
+// Translation Dictionary
+const translations = {
+    en: {
+        langText: 'ESPAÑOL',
+        paymentBanner: 'Payment Accepted: Cash Only or Cash App: <span class="font-bold underline">$LoganLeFlore</span>',
+        heroTitle: 'Professional Home & Auto <span class="text-brandRed">Detailing Services</span>',
+        heroSubtitle: 'Residential pool restoring, precision lawn striping, high-gloss auto detailing, and sanitized curb & bin valeting. Real quality, real transformations.',
+        callText: 'Questions? Call or Text: (918) 470-4748',
+        checkCalBtn: 'Check Availability Calendar',
+        servicesHeader: 'Core Services & Pricing',
+        servicesSubtext: 'Click any service button below to instantly pick your service and start booking.',
+        titlePool: 'Pool Restoration & Care',
+        descPool: 'Complete chemical shock balance, green algae scrubbing, floor vacuuming, and pump/filter deep backwashing.',
+        btnPool: 'Book Pool Care ($95)',
+        titleLawn: 'Precision Striping & Edging',
+        descLawn: 'Overgrowth cutting, crisp sidewalk & driveway razor edging, yard debris blowing, and custom aesthetic striping.',
+        btnLawn: 'Book Lawn Care ($75)',
+        titleAuto: 'Driveway SUV Deep Detail',
+        descAuto: 'Full foam cannon pressure wash, rim brake-dust removal, tire shine coating, interior deep vacuum, & window clarity polish.',
+        btnAuto: 'Book Auto Detail ($150)',
+        titleTrash: 'Interior Bin Sanitizing',
+        descTrash: '200° hot high-pressure interior wash, grime removal, and deodorizing disinfectant blast.',
+        btnTrash: 'Bin Wash ($15)',
+        titleCurb: 'Curbside Trash Bin Service',
+        descCurb: 'Weekly scheduled bin pull-out to the curb on collection day and return back to your home/garage area after pickup.',
+        btnCurb: 'Curb Valet ($5)',
+        calHeader: 'Interactive Schedule Calendar',
+        calSubtext: 'Click any GREEN day to set your booking date.',
+        legendGreen: 'GREEN = FREE',
+        legendRed: 'RED = BOOKED',
+        payHeader: 'Payment Instructions',
+        paySubtext: 'We keep pricing honest and direct. All service balances are due upon job completion at your location.',
+        lblSelectService: 'SELECTED SERVICES (CHECK ALL THAT APPLY)',
+        lblName: 'YOUR FULL NAME',
+        lblPhone: 'PHONE NUMBER',
+        lblAddress: 'SERVICE ADDRESS',
+        btnConfirm: 'SUBMIT APPOINTMENT REQUEST'
+    },
+    es: {
+        langText: 'ENGLISH',
+        paymentBanner: 'Pago Aceptado: Solo Efectivo o Cash App: <span class="font-bold underline">$LoganLeFlore</span>',
+        heroTitle: 'Servicios Profesionales Para <span class="text-brandRed">Hogar y Automóvil</span>',
+        heroSubtitle: 'Restauración de piscinas, corte de césped con líneas perfectas, detallado de autos y desinfección de botes de basura.',
+        callText: '¿Preguntas? Llama o envía texto: (918) 470-4748',
+        checkCalBtn: 'Ver Calendario de Disponibilidad',
+        servicesHeader: 'Servicios Principales y Precios',
+        servicesSubtext: 'Haga clic en cualquier servicio para iniciar su reserva.',
+        titlePool: 'Restauración de Piscinas',
+        descPool: 'Tratamiento químico de choque, cepillado de algas, aspirado de fondo y lavado del sistema de filtrado.',
+        btnPool: 'Reservar Piscina ($95)',
+        titleLawn: 'Corte de Césped y Bordeado',
+        descLawn: 'Corte de césped alto, perfilado con navaja en aceras y entradas, soplado de residuos y diseño con líneas.',
+        btnLawn: 'Reservar Césped ($75)',
+        titleAuto: 'Detallado Profundo de SUV',
+        descAuto: 'Lavado con cañón de espuma, limpieza de rines y frenos, brillo de llantas, aspirado profundo e interior impecable.',
+        btnAuto: 'Reservar Auto ($150)',
+        titleTrash: 'Desinfección de Botes',
+        descTrash: 'Lavado a presión a 200° en el interior, eliminación de suciedad y desinfección con desodorante.',
+        btnTrash: 'Bin Wash ($15)',
+        titleCurb: 'Servicio de Botes de Basura',
+        descCurb: 'Servicio semanal de sacar los botes a la acera el día de recolección y regresarlos a su lugar.',
+        btnCurb: 'Curb Valet ($5)',
+        calHeader: 'Calendario de Citas Interactivo',
+        calSubtext: 'Haga clic en un día VERDE para seleccionar la fecha.',
+        legendGreen: 'VERDE = LIBRE',
+        legendRed: 'ROJO = RESERVADO',
+        payHeader: 'Instrucciones de Pago',
+        paySubtext: 'Mantenemos precios honestos y directos. Todos los saldos vencen al completar el trabajo.',
+        lblSelectService: 'SERVICIOS SELECCIONADOS (MARQUE LOS QUE APLIQUEN)',
+        lblName: 'SU NOMBRE COMPLETO',
+        lblPhone: 'NÚMERO DE TELÉFONO',
+        lblAddress: 'DIRECCIÓN DEL SERVICIO',
+        btnConfirm: 'ENVIAR SOLICITUD DE CITA'
+    }
+};
+
+// Toggle Language
+function toggleLanguage() {
+    currentLang = currentLang === 'en' ? 'es' : 'en';
+    const t = translations[currentLang];
+
+    document.getElementById('langBtnText').innerText = t.langText;
+    document.getElementById('paymentBanner').innerHTML = t.paymentBanner;
+    document.getElementById('heroTitle').innerHTML = t.heroTitle;
+    document.getElementById('heroSubtitle').innerText = t.heroSubtitle;
+    document.getElementById('callText').innerText = t.callText;
+    document.getElementById('checkCalBtn').innerText = t.checkCalBtn;
+    document.getElementById('servicesHeader').innerText = t.servicesHeader;
+    document.getElementById('servicesSubtext').innerText = t.servicesSubtext;
+
+    document.getElementById('titlePool').innerText = t.titlePool;
+    document.getElementById('descPool').innerText = t.descPool;
+    document.getElementById('btnPool').innerText = t.btnPool;
+
+    document.getElementById('titleLawn').innerText = t.titleLawn;
+    document.getElementById('descLawn').innerText = t.descLawn;
+    document.getElementById('btnLawn').innerText = t.btnLawn;
+
+    document.getElementById('titleAuto').innerText = t.titleAuto;
+    document.getElementById('descAuto').innerText = t.descAuto;
+    document.getElementById('btnAuto').innerText = t.btnAuto;
+
+    document.getElementById('titleTrash').innerText = t.titleTrash;
+    document.getElementById('descTrash').innerText = t.descTrash;
+    document.getElementById('btnTrash').innerText = t.btnTrash;
+
+    document.getElementById('titleCurb').innerText = t.titleCurb;
+    document.getElementById('descCurb').innerText = t.descCurb;
+    document.getElementById('btnCurb').innerText = t.btnCurb;
+
+    document.getElementById('calHeader').innerText = t.calHeader;
+    document.getElementById('calSubtext').innerText = t.calSubtext;
+    document.getElementById('legendGreen').innerText = t.legendGreen;
+    document.getElementById('legendRed').innerText = t.legendRed;
+
+    document.getElementById('payHeader').innerText = t.payHeader;
+    document.getElementById('paySubtext').innerText = t.paySubtext;
+
+    document.getElementById('lblSelectService').innerText = t.lblSelectService;
+    document.getElementById('lblName').innerText = t.lblName;
+    document.getElementById('lblPhone').innerText = t.lblPhone;
+    document.getElementById('lblAddress').innerText = t.lblAddress;
+    document.getElementById('submitBookingBtn').innerText = t.btnConfirm;
+
+    renderCalendar();
+}
+
+// Render Calendar Grid
+function renderCalendar() {
+    const year = displayDate.getFullYear();
+    const month = displayDate.getMonth();
+
+    const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+    document.getElementById('calMonthYear').innerText = `${monthNames[month]} ${year}`;
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    const grid = document.getElementById('calendarDays');
+    grid.innerHTML = '';
+
+    for (let i = 0; i < firstDay; i++) {
+        grid.innerHTML += `<div></div>`;
+    }
+
+    for (let d = 1; d <= totalDays; d++) {
+        const dateKey = `${year}-${month + 1}-${d}`;
+        const isBooked = !!bookedDates[dateKey];
+        const isSelected = selectedDayKey === dateKey;
+
+        let btnClass = "bg-emerald-950 border-emerald-700 text-emerald-400 hover:bg-emerald-900";
+        let statusLabel = "AVAILABLE";
+
+        if (isBooked) {
+            btnClass = "bg-brandDarkRed border-brandRed text-white cursor-not-allowed";
+            statusLabel = "BOOKED";
+        } else if (isSelected) {
+            btnClass = "bg-brandRed border-white text-white ring-2 ring-white";
+            statusLabel = "SELECTED";
+        }
+
+        grid.innerHTML += `
+            <button data-day="${d}" class="cal-day-btn p-2.5 rounded-xl border flex flex-col items-center justify-center gap-1 font-black transition active:scale-95 ${btnClass}">
+                <span class="text-sm">${d}</span>
+                <span class="text-[8px] tracking-tighter uppercase opacity-90">${statusLabel}</span>
+            </button>
+        `;
+    }
+
+    // Attach click listeners to individual calendar day buttons safely
+    document.querySelectorAll('.cal-day-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const day = parseInt(this.getAttribute('data-day'));
+            if (typeof handleDayClick === 'function') {
+                handleDayClick(day);
+            }
+        });
+    });
+}
+
+function changeMonth(dir) {
+    displayDate.setMonth(displayDate.getMonth() + dir);
+    renderCalendar();
+}
+      <script src="app-part1.js"></script>
+<script src="app-part2.js"></script>
+// State Variables
+let currentLang = 'en';
+let displayDate = new Date(2026, 11, 1); // December 2026 default
+let selectedDayKey = null;
+let isAdminLoggedIn = false;
+let bookedDates = {};
+
+// Translation Dictionary
+const translations = {
+    en: {
+        langText: 'ESPAÑOL',
+        paymentBanner: 'Payment Accepted: Cash Only or Cash App: <span class="font-bold underline">$LoganLeFlore</span>',
+        heroTitle: 'Professional Home & Auto <span class="text-brandRed">Detailing Services</span>',
+        heroSubtitle: 'Residential pool restoring, precision lawn striping, high-gloss auto detailing, and sanitized curb & bin valeting. Real quality, real transformations.',
+        callText: 'Questions? Call or Text: (918) 470-4748',
+        checkCalBtn: 'Check Availability Calendar',
+        servicesHeader: 'Core Services & Pricing',
+        servicesSubtext: 'Click any service button below to instantly pick your service and start booking.',
+        titlePool: 'Pool Restoration & Care',
+        descPool: 'Complete chemical shock balance, green algae scrubbing, floor vacuuming, and pump/filter deep backwashing.',
+        btnPool: 'Book Pool Care ($95)',
+        titleLawn: 'Precision Striping & Edging',
+        descLawn: 'Overgrowth cutting, crisp sidewalk & driveway razor edging, yard debris blowing, and custom aesthetic striping.',
+        btnLawn: 'Book Lawn Care ($75)',
+        titleAuto: 'Driveway SUV Deep Detail',
+        descAuto: 'Full foam cannon pressure wash, rim brake-dust removal, tire shine coating, interior deep vacuum, & window clarity polish.',
+        btnAuto: 'Book Auto Detail ($150)',
+        titleTrash: 'Interior Bin Sanitizing',
+        descTrash: '200° hot high-pressure interior wash, grime removal, and deodorizing disinfectant blast.',
+        btnTrash: 'Bin Wash ($15)',
+        titleCurb: 'Curbside Trash Bin Service',
+        descCurb: 'Weekly scheduled bin pull-out to the curb on collection day and return back to your home/garage area after pickup.',
+        btnCurb: 'Curb Valet ($5)',
+        calHeader: 'Interactive Schedule Calendar',
+        calSubtext: 'Click any GREEN day to set your booking date.',
+        legendGreen: 'GREEN = FREE',
+        legendRed: 'RED = BOOKED',
+        payHeader: 'Payment Instructions',
+        paySubtext: 'We keep pricing honest and direct. All service balances are due upon job completion at your location.',
+        lblSelectService: 'SELECTED SERVICES (CHECK ALL THAT APPLY)',
+        lblName: 'YOUR FULL NAME',
+        lblPhone: 'PHONE NUMBER',
+        lblAddress: 'SERVICE ADDRESS',
+        btnConfirm: 'SUBMIT APPOINTMENT REQUEST'
+    },
+    es: {
+        langText: 'ENGLISH',
+        paymentBanner: 'Pago Aceptado: Solo Efectivo o Cash App: <span class="font-bold underline">$LoganLeFlore</span>',
+        heroTitle: 'Servicios Profesionales Para <span class="text-brandRed">Hogar y Automóvil</span>',
+        heroSubtitle: 'Restauración de piscinas, corte de césped con líneas perfectas, detallado de autos y desinfección de botes de basura.',
+        callText: '¿Preguntas? Llama o envía texto: (918) 470-4748',
+        checkCalBtn: 'Ver Calendario de Disponibilidad',
+        servicesHeader: 'Servicios Principales y Precios',
+        servicesSubtext: 'Haga clic en cualquier servicio para iniciar su reserva.',
+        titlePool: 'Restauración de Piscinas',
+        descPool: 'Tratamiento químico de choque, cepillado de algas, aspirado de fondo y lavado del sistema de filtrado.',
+        btnPool: 'Reservar Piscina ($95)',
+        titleLawn: 'Corte de Césped y Bordeado',
+        descLawn: 'Corte de césped alto, perfilado con navaja en aceras y entradas, soplado de residuos y diseño con líneas.',
+        btnLawn: 'Reservar Césped ($75)',
+        titleAuto: 'Detallado Profundo de SUV',
+        descAuto: 'Lavado con cañón de espuma, limpieza de rines y frenos, brillo de llantas, aspirado profundo e interior impecable.',
+        btnAuto: 'Reservar Auto ($150)',
+        titleTrash: 'Desinfección de Botes',
+        descTrash: 'Lavado a presión a 200° en el interior, eliminación de suciedad y desinfección con desodorante.',
+        btnTrash: 'Bin Wash ($15)',
+        titleCurb: 'Servicio de Botes de Basura',
+        descCurb: 'Servicio semanal de sacar los botes a la acera el día de recolección y regresarlos a su lugar.',
+        btnCurb: 'Curb Valet ($5)',
+        calHeader: 'Calendario de Citas Interactivo',
+        calSubtext: 'Haga clic en un día VERDE para seleccionar la fecha.',
+        legendGreen: 'VERDE = LIBRE',
+        legendRed: 'ROJO = RESERVADO',
+        payHeader: 'Instrucciones de Pago',
+        paySubtext: 'Mantenemos precios honestos y directos. Todos los saldos vencen al completar el trabajo.',
+        lblSelectService: 'SERVICIOS SELECCIONADOS (MARQUE LOS QUE APLIQUEN)',
+        lblName: 'SU NOMBRE COMPLETO',
+        lblPhone: 'NÚMERO DE TELÉFONO',
+        lblAddress: 'DIRECCIÓN DEL SERVICIO',
+        btnConfirm: 'ENVIAR SOLICITUD DE CITA'
+    }
+};
+
+// Toggle Language
+function toggleLanguage() {
+    currentLang = currentLang === 'en' ? 'es' : 'en';
+    const t = translations[currentLang];
+
+    document.getElementById('langBtnText').innerText = t.langText;
+    document.getElementById('paymentBanner').innerHTML = t.paymentBanner;
+    document.getElementById('heroTitle').innerHTML = t.heroTitle;
+    document.getElementById('heroSubtitle').innerText = t.heroSubtitle;
+    document.getElementById('callText').innerText = t.callText;
+    document.getElementById('checkCalBtn').innerText = t.checkCalBtn;
+    document.getElementById('servicesHeader').innerText = t.servicesHeader;
+    document.getElementById('servicesSubtext').innerText = t.servicesSubtext;
+
+    document.getElementById('titlePool').innerText = t.titlePool;
+    document.getElementById('descPool').innerText = t.descPool;
+    document.getElementById('btnPool').innerText = t.btnPool;
+
+    document.getElementById('titleLawn').innerText = t.titleLawn;
+    document.getElementById('descLawn').innerText = t.descLawn;
+    document.getElementById('btnLawn').innerText = t.btnLawn;
+
+    document.getElementById('titleAuto').innerText = t.titleAuto;
+    document.getElementById('descAuto').innerText = t.descAuto;
+    document.getElementById('btnAuto').innerText = t.btnAuto;
+
+    document.getElementById('titleTrash').innerText = t.titleTrash;
+    document.getElementById('descTrash').innerText = t.descTrash;
+    document.getElementById('btnTrash').innerText = t.btnTrash;
+
+    document.getElementById('titleCurb').innerText = t.titleCurb;
+    document.getElementById('descCurb').innerText = t.descCurb;
+    document.getElementById('btnCurb').innerText = t.btnCurb;
+
+    document.getElementById('calHeader').innerText = t.calHeader;
+    document.getElementById('calSubtext').innerText = t.calSubtext;
+    document.getElementById('legendGreen').innerText = t.legendGreen;
+    document.getElementById('legendRed').innerText = t.legendRed;
+
+    document.getElementById('payHeader').innerText = t.payHeader;
+    document.getElementById('paySubtext').innerText = t.paySubtext;
+
+    document.getElementById('lblSelectService').innerText = t.lblSelectService;
+    document.getElementById('lblName').innerText = t.lblName;
+    document.getElementById('lblPhone').innerText = t.lblPhone;
+    document.getElementById('lblAddress').innerText = t.lblAddress;
+    document.getElementById('submitBookingBtn').innerText = t.btnConfirm;
+
+    renderCalendar();
+}
+
+// Render Calendar Grid
+function renderCalendar() {
+    const year = displayDate.getFullYear();
+    const month = displayDate.getMonth();
+
+    const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+    document.getElementById('calMonthYear').innerText = `${monthNames[month]} ${year}`;
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    const grid = document.getElementById('calendarDays');
+    grid.innerHTML = '';
+
+    for (let i = 0; i < firstDay; i++) {
+        grid.innerHTML += `<div></div>`;
+    }
+
+    for (let d = 1; d <= totalDays; d++) {
+        const dateKey = `${year}-${month + 1}-${d}`;
+        const isBooked = !!bookedDates[dateKey];
+        const isSelected = selectedDayKey === dateKey;
+
+        let btnClass = "bg-emerald-950 border-emerald-700 text-emerald-400 hover:bg-emerald-900";
+        let statusLabel = "AVAILABLE";
+
+        if (isBooked) {
+            btnClass = "bg-brandDarkRed border-brandRed text-white cursor-not-allowed";
+            statusLabel = "BOOKED";
+        } else if (isSelected) {
+            btnClass = "bg-brandRed border-white text-white ring-2 ring-white";
+            statusLabel = "SELECTED";
+        }
+
+        grid.innerHTML += `
+            <button data-day="${d}" class="cal-day-btn p-2.5 rounded-xl border flex flex-col items-center justify-center gap-1 font-black transition active:scale-95 ${btnClass}">
+                <span class="text-sm">${d}</span>
+                <span class="text-[8px] tracking-tighter uppercase opacity-90">${statusLabel}</span>
+            </button>
+        `;
+    }
+
+    // Attach click listeners to individual calendar day buttons safely
+    document.querySelectorAll('.cal-day-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const day = parseInt(this.getAttribute('data-day'));
+            if (typeof handleDayClick === 'function') {
+                handleDayClick(day);
+            }
+        });
+    });
+}
+
+function changeMonth(dir) {
+    displayDate.setMonth(displayDate.getMonth() + dir);
+    renderCalendar();
+}
+      /* Custom CSS Extensions & Theme Enhancements */
+
+:root {
+  --brand-red: #dc2626;
+  --brand-dark-red: #7f1d1d;
+  --brand-black: #0a0a0a;
+  --brand-dark-gray: #171717;
+  --brand-gray: #262626;
+}
+
+/* Custom Scrollbar for Dark Theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #dc2626;
+}
+
+/* Glassmorphism Effect for Cards */
+.glass-panel {
+  background: rgba(23, 23, 23, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Custom Animations */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(220, 38, 38, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(220, 38, 38, 0.6);
+  }
+}
+
+.glow-red {
+  animation: pulseGlow 3s infinite ease-in-out;
+}
+
+/* Calendar Button Focus Ring Fix */
+.cal-day-btn:focus {
+  outline: none;
+}
+
+/* Checkbox Custom Styling for Dark Theme */
+input[type="checkbox"].service-check {
+  accent-color: #dc2626;
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+}/your-project-directory/
+│
+├── index.html        (Part 1)
+├── app-part1.js      (Part 2)
+├── app-part2.js      (Part 3)
+└── styles.css        (Part 4)
+      <link rel="stylesheet" href="styles.css" />
+      <script src="app-part1.js"></script>
+<script src="app-part2.js"></script>
+      
+      
