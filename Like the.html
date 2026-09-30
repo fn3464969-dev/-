@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logan's Premier Services | Master Check-In & Booking Calendar</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            black: '#07090E',
+                            card: '#0F131F',
+                            panel: '#151A2B',
+                            border: '#212940',
+                            blue: '#00F0FF',
+                            blueDark: '#007BFF',
+                            red: '#FF2A5F',
+                            green: '#00FF88',
+                            passed: '#0A0C12'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #07090E;
+            color: #F3F4F6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(15, 19, 31, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: rgba(21, 26, 43, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* Custom Service Cards */
+        .service-box {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(145deg, #0f131f 0%, #151a2b 100%);
+        }
+        .service-box:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 240, 255, 0.4);
+            box-shadow: 0 10px 25px -5px rgba(0, 240, 255, 0.2);
+        }
+        .service-box.selected {
+            border-color: #00F0FF !important;
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.35) !important;
+            background: linear-gradient(145deg, #111a2e 0%, #17243e 100%) !important;
+        }
+
+        /* CALENDAR STATUS RULES */
+        /* 1. Passed Days (Black) */
+        .day-passed {
+            background-color: #080A0E;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            color: #4A5568;
+        }
+
+        /* 2. 0 to 2 Slots Filled (Green) */
+        .day-green {
+            background: rgba(0, 255, 136, 0.04);
+            border: 1px solid rgba(0, 255, 136, 0.35);
+            box-shadow: inset 0 0 12px rgba(0, 255, 136, 0.04);
+        }
+        .day-green:hover {
+            border-color: #00FF88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.25);
+        }
+
+        /* 3. Exactly 3 Slots Filled (Blue) */
+        .day-blue {
+            background: rgba(0, 240, 255, 0.04);
+            border: 1px solid rgba(0, 240, 255, 0.35);
+            box-shadow: inset 0 0 12px rgba(0, 240, 255, 0.04);
+        }
+        .day-blue:hover {
+            border-color: #00F0FF;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        /* 4. Exactly 4 Slots Filled (Red) */
+        .day-red {
+            background: rgba(255, 42, 95, 0.05);
+            border: 1px solid rgba(255, 42, 95, 0.4);
+            box-shadow: inset 0 0 12px rgba(255, 42, 95, 0.04);
+        }
+        .day-red:hover {
+            border-color: #FF2A5F;
+            box-shadow: 0 0 20px rgba(255, 42, 95, 0.3);
+        }
+
+        .bg-grid {
+            background-size: 32px 32px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #07090E; }
+        ::-webkit-scrollbar-thumb { background: #212940; border-radius: 4px; }
+
+        /* FIRE EFFECTS & ANIMATIONS */
+        .fire-gradient {
+            background: linear-gradient(-45deg, #ff0000, #ff4500, #ff8c00, #ffd700);
+            background-size: 300% 300%;
+            animation: fireGlow 3s ease infinite;
+        }
+
+        .fire-border {
+            border: 2px solid #ff4500 !important;
+            box-shadow: 0 0 10px rgba(255, 69, 0, 0.6),
+                        0 0 20px rgba(255, 140, 0, 0.4),
+                        inset 0 0 10px rgba(255, 69, 0, 0.4) !important;
+            animation: firePulse 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes fireGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes firePulse {
+            0% {
+                box-shadow: 0 0 8px rgba(255, 69, 0, 0.6), 0 0 15px rgba(255, 140, 0, 0.4);
+            }
+            100% {
+                box-shadow: 0 0 18px rgba(255, 69, 0, 0.9), 0 0 30px rgba(255, 215, 0, 0.7);
+            }
+        }
+
+        .spark-particle {
+            position: absolute;
+            pointer-events: none;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffd700 0%, #ff4500 100%);
+            animation: floatUp 0.6s ease-out forwards;
+            z-index: 50;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--dx), -40px) scale(0.2);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-brand-black bg-grid selection:bg-brand-blue selection:text-black">
+
+    <header class="sticky top-0 z-40 glass-panel border-b border-brand-border px-4 lg:px-8 py-3.5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- Brand Logo -->
+            <div class="flex items-center space-x-3 w-full md:w-auto justify-between md:justify-start">
+                <div class="flex items-center space-x-3">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-blue via-brand-blueDark to-brand-red p-[2px] fire-border">
+                        <div class="w-full h-full bg-brand-black rounded-[10px] flex items-center justify-center">
+                            <span class="font-black text-2xl text-transparent bg-clip-text fire-gradient">L</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xl font-black tracking-wider uppercase text-white flex items-center gap-1.5">
+                            LOGAN'S PREMIER <i class="fa-solid fa-fire text-orange-500 animate-pulse text-base"></i>
+                        </span>
+                        <span class="text-xs block text-brand-blue font-bold tracking-widest -mt-1">PROPERTY & AUTO SERVICES</span>
+                    </div>
+                </div>
+
+                <!-- Mobile Action Buttons -->
+                <div class="flex md:hidden items-center gap-2">
+                    <button id="checkInBtnMobile" class="px-3 py-1.5 rounded-xl border border-brand-green/40 bg-brand-green/10 text-brand-green text-xs font-bold flex items-center gap-1.5 fire-border">
+                        <i class="fa-solid fa-clipboard-user"></i> Check-In
+                    </button>
+                    <button id="adminToggleBtnMobile" class="px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-shield text-brand-blue"></i> Admin
+                    </button>
+                </div>
+            </div>
+
+            <!-- Header Quick Info & Top Right Action Buttons -->
+            <div class="flex flex-wrap items-center justify-center md:justify-end gap-3 text-xs w-full md:w-auto">
+                <a href="tel:9184704748" class="hidden sm:flex px-3.5 py-2 rounded-xl glass-card border border-brand-blue/30 text-gray-200 hover:text-brand-blue transition-colors items-center gap-2">
+                    <i class="fa-solid fa-phone text-brand-blue"></i>
+                    <span class="font-bold">918-470-4748</span>
+                </a>
+                
+                <div class="hidden sm:flex px-3.5 py-2 rounded-xl glass-card border border-brand-red/30 text-gray-200 items-center gap-2">
+                    <i class="fa-solid fa-wallet text-brand-red"></i>
+                    <span>Cash / Cash App: <strong class="text-brand-red">$LoganLeflore</strong></span>
+                </div>
+
+                <!-- TOP RIGHT BUTTON 1: CHECK-IN / ALL BOOKINGS LIST BUTTON -->
+                <button id="checkInBtn" class="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl border fire-border fire-gradient text-white font-extrabold text-xs transition-all shadow-lg hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-clipboard-user text-sm"></i>
+                    <span>Check-In / Bookings</span>
+                    <span id="headerCheckInBadge" class="ml-1 px-2 py-0.5 rounded-full bg-black text-amber-400 font-black text-[10px] border border-amber-500/50">0</span>
+                </button>
+
+                <!-- TOP RIGHT BUTTON 2: ADMIN MODE BUTTON -->
+                <button id="adminToggleBtn" class="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-700 bg-gray-900/80 hover:bg-gray-800 text-gray-300 font-bold text-xs transition-all shadow-lg">
+                    <i class="fa-solid fa-user-shield text-brand-blue"></i>
+                    <span id="adminBtnText">Admin Console</span>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <div id="adminBanner" class="hidden bg-gradient-to-r from-brand-blueDark/20 via-purple-900/30 to-brand-red/20 border-b border-brand-blue/30 px-4 py-2 text-xs font-semibold text-center flex items-center justify-center gap-3">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-black bg-brand-blue text-black uppercase tracking-wider">Admin Unlocked</span>
+        <span class="text-gray-200">You can edit set prices, inspect all customer appointments, and clear days as needed.</span>
+        <button id="exitAdminBtn" class="underline text-brand-blue hover:text-white font-bold ml-2">Exit Admin Mode</button>
+    </div>
+
+    <!-- MAIN APP BODY -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        <!-- SECTION 1: BIG SERVICE BOXES WITH CUSTOM PRICES -->
+        <section class="space-y-4">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-brand-border pb-3">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2.5">
+                        <i class="fa-solid fa-fire text-orange-500"></i>
+                        <span>1. Select Service Job Box</span>
+                    </h2>
+                    <p class="text-xs sm:text-sm text-gray-400 mt-0.5">
+                        Click one of the big job boxes to view rates and select your service.
+                    </p>
+                </div>
+                <div id="adminPriceEditNotice" class="hidden text-xs font-bold text-brand-blue bg-brand-blue/10 px-3 py-1.5 rounded-xl border border-brand-blue/30 flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square"></i> Admin Mode: Click any box price tag to edit price!
+                </div>
+            </div>
+
+            <!-- Big Job Card Grid -->
+            <div id="serviceBoxesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Loaded dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- OPTIONAL VIP SUBSCRIPTION BANNER WITH FIRE THEME -->
+        <section class="fire-border bg-neutral-900/90 rounded-3xl p-6 sm:p-8 backdrop-blur-md relative overflow-hidden my-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-2 max-w-2xl">
+                    <div class="flex items-center gap-2">
+                        <span class="fire-gradient text-[10px] font-black uppercase text-white px-3 py-1 rounded-full tracking-wider shadow-md">100% OPTIONAL</span>
+                        <span class="text-amber-400 text-xs font-extrabold flex items-center gap-1"><i class="fa-solid fa-fire"></i> VIP Maintenance Club</span>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-black text-white">Subscribe & Lock In Priority Spots</h3>
+                    <p class="text-xs sm:text-sm text-gray-300">
+                        Get automated property care & vehicle detailing scheduled every month. Cancel anytime.
+                    </p>
+                </div>
+                <button id="vipSubscribeBtn" class="fire-gradient fire-border px-6 py-3.5 rounded-2xl text-white font-black text-xs uppercase tracking-wider hover:scale-105 active:scale-95 transition-all shadow-xl shrink-0 flex items-center gap-2">
+                    <i class="fa-solid fa-crown text-amber-300"></i>
+                    <span>Explore VIP Club ($49/mo)</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- SECTION 2: CALENDAR & BOOKING ENGINE -->
+        <section class="space-y-6">
+            <div class="glass-panel rounded-2xl p-4 sm:p-6 border border-brand-border flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2.5">
+                        <i class="fa-regular fa-calendar-check text-brand-blue"></i>
+                        <span>2. Pick Available Date</span>
+                    </h2>
+                    <p class="text-xs sm:text-sm text-gray-400 mt-0.5">
+                        Strict maximum of 4 bookings per day. Click any open day to book your slot.
+                    </p>
+                </div>
+
+                <!-- Calendar Rules Legend -->
+                <div class="flex flex-wrap items-center gap-2.5 text-xs font-semibold">
+                    <div class="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-gray-950 border border-gray-800 text-gray-400">
+                        <span class="w-3 h-3 rounded-full bg-gray-700"></span>
+                        <span>Passed (Black)</span>
+                    </div>
+                    <div class="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-400">
+                        <span class="w-3 h-3 rounded-full bg-brand-green shadow-[0_0_8px_#00FF88]"></span>
+                        <span>0–2 Slots (Green)</span>
+                    </div>
+                    <div class="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-cyan-950/60 border border-cyan-500/40 text-cyan-400">
+                        <span class="w-3 h-3 rounded-full bg-brand-blue shadow-[0_0_8px_#00F0FF]"></span>
+                        <span>3 Slots (Blue)</span>
+                    </div>
+                    <div class="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-400">
+                        <span class="w-3 h-3 rounded-full bg-brand-red shadow-[0_0_8px_#FF2A5F]"></span>
+                        <span>4 Slots Full (Red)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Month Controls -->
+            <div class="flex items-center justify-between">
+                <button id="prevMonthBtn" class="px-4 py-2.5 rounded-xl glass-card hover:bg-brand-card border border-brand-border text-gray-300 hover:text-brand-blue font-bold text-sm transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-chevron-left"></i>
+                    <span class="hidden sm:inline">Previous</span>
+                </button>
+
+                <div class="text-center">
+                    <h2 id="monthTitle" class="text-xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-white to-brand-red tracking-wide">
+                        <!-- Loaded dynamically -->
+                    </h2>
+                </div>
+
+                <button id="nextMonthBtn" class="px-4 py-2.5 rounded-xl glass-card hover:bg-brand-card border border-brand-border text-gray-300 hover:text-brand-red font-bold text-sm transition-all flex items-center gap-2">
+                    <span class="hidden sm:inline">Next</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <!-- Days Header -->
+            <div class="grid grid-cols-7 gap-2 sm:gap-3 text-center text-xs font-black uppercase tracking-widest text-gray-400">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+
+            <div id="calendarGrid" class="grid grid-cols-7 gap-2 sm:gap-3">
+                <!-- Calendar Day Cells -->
+            </div>
+        </section>
+
+        <!-- SECTION 3: BOOKING FORM MODAL / DRAWER FOR SELECTED DATE -->
+        <section id="bookingFormSection" class="glass-panel rounded-3xl p-6 sm:p-8 border border-brand-border hidden space-y-6">
+            <div class="flex items-center justify-between border-b border-brand-border pb-4">
+                <div>
+                    <h3 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-plus text-brand-green"></i>
+                        <span>Complete Booking Request</span>
+                    </h3>
+                    <p class="text-xs text-gray-400">Selected Date: <strong id="displaySelectedDate" class="text-brand-green">None</strong></p>
+                </div>
+                <button id="cancelBookingSectionBtn" class="text-xs text-gray-400 hover:text-white font-bold px-3 py-1.5 rounded-xl border border-brand-border bg-brand-black">
+                    <i class="fa-solid fa-xmark mr-1"></i> Cancel
+                </button>
+            </div>
+
+            <form id="bookingForm" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Full Name</label>
+                        <input type="text" id="custName" required placeholder="e.g. John Smith" class="w-full px-4 py-3 rounded-xl bg-brand-black border border-brand-border text-white text-xs focus:outline-none focus:border-brand-blue">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Phone Number</label>
+                        <input type="tel" id="custPhone" required placeholder="e.g. 918-123-4567" class="w-full px-4 py-3 rounded-xl bg-brand-black border border-brand-border text-white text-xs focus:outline-none focus:border-brand-blue">
+                    </d
