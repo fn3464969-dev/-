@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logan's Auto Detailing & Pressure Washing</title>
+  <style>
+    :root {
+      --primary: #0071e3;
+      --dark: #1d1d1f;
+      --light: #f5f5f7;
+      --card-bg: #ffffff;
+      --accent: #34c759;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: var(--dark);
+      color: #fff;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    header h1 { margin: 0; font-size: 2.2rem; }
+    header p { margin-top: 0.5rem; color: #a1a1a6; }
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    h2 { margin-top: 0; border-bottom: 2px solid var(--light); padding-bottom: 0.5rem; }
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 1rem;
+    }
+    .freq-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-top: 0.5rem;
+    }
+    .freq-btn {
+      padding: 0.75rem;
+      border: 2px solid #ccc;
+      background: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      font-weight: 600;
+    }
+    .freq-btn.active {
+      border-color: var(--primary);
+      background: #e8f2ff;
+      color: var(--primary);
+    }
+    .star-rating {
+      display: flex;
+      gap: 8px;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #ccc;
+    }
+    .star-rating .star.selected { color: #ffcc00; }
+    .btn-submit {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 1rem;
+      width: 100%;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .contact-bar {
+      text-align: center;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+    .admin-sec {
+      margin-top: 3rem;
+      border-top: 1px solid #ccc;
+      padding-top: 1rem;
+    }
+    .admin-btn {
+      background: #8e8e93;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Logan's Detailing & Pressure Washing</h1>
+  <p>Call or Text: (918) 470-4748 | Hours: 9:00 AM - 7:00 PM</p>
+</header>
+
+<div class="container">
+  <!-- Booking Form -->
+  <div class="card">
+    <h2>Book Your Service</h2>
+    <form id="bookingForm">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="custName" required placeholder="John Doe">
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="custPhone" required placeholder="(918) 000-0000">
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="custEmail" required placeholder="john@example.com">
+      </div>
+      <div class="form-group">
+        <label>Service Address</label>
+        <input type="text" id="custAddress" required placeholder="123 Main St, Krebs, OK">
+      </div>
+      
+      <div class="form-group">
+        <label>Select Service</label>
+        <select id="serviceSelect" required>
+          <option value="45">Standard Exterior Wash ($45)</option>
+          <option value="75">Full Interior & Exterior Detail ($75)</option>
+          <option value="120">Premium Full Package + Steam Sanitization ($120)</option>
+          <option value="20">Trash Can Pressure Washing ($20)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>How often would you like service?</label>
+        <div class="freq-options">
+          <div class="freq-btn active" onclick="setFreq(this, 'One-Time')">One-Time</div>
+          <div class="freq-btn" onclick="setFreq(this, 'Weekly')">Weekly</div>
+          <div class="freq-btn" onclick="setFreq(this, 'Every 2 Weeks')">Every 2 Weeks</div>
+          <div class="freq-btn" onclick="setFreq(this, 'Monthly')">Monthly</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Preferred Time Slot (9:00 AM - 7:00 PM)</label>
+        <input type="time" id="bookingTime" min="09:00" max="19:00" required>
+      </div>
+
+      <div class="form-group">
+        <label>Job Description & Focus Areas</label>
+        <textarea id="jobDesc" rows="3" placeholder="Tell us what you want us to focus on most (e.g., dog hair removal, carpet stains, trash can sanitization)..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Payment Method</label>
+        <select id="payMethod" required>
+          <option value="Cash/CashApp">Cash in Person or Cash App ($LoganLeflore)</option>
+          <option value="Card">Pay Now with Credit/Debit Card</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-submit">Confirm & Book Now</button>
+    </form>
+  </div>
+
+  <!-- Review Widget -->
+  <div class="card">
+    <h2>Leave a Review</h2>
+    <div class="star-rating" id="starContainer">
+      <span class="star" onclick="rate(1)">★</span>
+      <span class="star" onclick="rate(2)">★</span>
+      <span class="star" onclick="rate(3)">★</span>
+      <span class="star" onclick="rate(4)">★</span>
+      <span class="star" onclick="rate(5)">★</span>
+    </div>
+    <div class="form-group" style="margin-top: 1rem;">
+      <textarea placeholder="Let us know what went well or what we can improve..." id="reviewText"></textarea>
+    </div>
+    <button class="admin-btn" onclick="submitReview()">Submit Rating</button>
+  </div>
+
+  <!-- Admin Controls -->
+  <div class="admin-sec">
+    <button class="admin-btn" onclick="loginAdmin()">Admin</button>
+    <div id="adminPanel" class="hidden card" style="margin-top: 1rem;">
+      <h3>Admin Dashboard</h3>
+      <p><strong>Daily Capacity Counter:</strong> <span id="clientCount">0</span>/4 Clients Booked</p>
+      <button class="admin-btn" onclick="resetCounter()" title="Double tap or click to reset">Double Tap / Reset Capacity to 0</button>
+      <h4>Active Bookings:</h4>
+      <ul id="bookingList"></ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  let selectedFreq = 'One-Time';
+  let bookedClients = 0;
+  let bookings = [];
+
+  function setFreq(el, value) {
+    document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    selectedFreq = value;
+  }
+
+  function rate(stars) {
+    const starEls = document.querySelectorAll('.star');
+    starEls.forEach((s, idx) => {
+      if (idx < stars) s.classList.add('selected');
+      else s.classList.remove('selected');
+    });
+  }
+
+  function submitReview() {
+    alert("Thank you for your 5-star rating!");
+  }
+
+  // Booking Form Handler
+  document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (bookedClients >= 4) {
+      alert("We are fully booked with 4 clients for this date. Please choose another day!");
+      return;
+    }
+
+    const bookingData = {
+      name: document.getElementById('custName').value,
+      phone: document.getElementById('custPhone').value,
+      email: document.getElementById('custEmail').value,
+      address: document.getElementById('custAddress').value,
+      servicePrice: document.getElementById('serviceSelect').value,
+      time: document.getElementById('bookingTime').value,
+      desc: document.getElementById('jobDesc').value,
+      freq: selectedFreq,
+      payment: document.getElementById('payMethod').value
+    };
+
+    // Check for duplicate time booking
+    const duplicateTime = bookings.some(b => b.time === bookingData.time);
+    if (duplicateTime) {
+      alert("That time slot is already booked! Please select a different time between 9 AM and 7 PM.");
+      return;
+    }
+
+    bookings.push(bookingData);
+    bookedClients++;
+    document.getElementById('clientCount').innerText = bookedClients;
+
+    // Simulate SMS Trigger to 918-470-4748
+    sendAutomatedSMS(bookingData);
+
+    let payMsg = bookingData.payment === 'Cash/CashApp' 
+      ? "Booking Confirmed! You can pay cash in person or via Cash App ($LoganLeflore)."
+      : "Booking Confirmed! Proceeding to card processing for $" + bookingData.servicePrice;
+    
+    alert(payMsg);
+    this.reset();
+  });
+
+  function sendAutomatedSMS(data) {
+    // In production, integration with Twilio API routes to (918) 470-4748
+    console.log("SMS Sent to (918) 470-4748:", 
+      `New Booking: ${data.name} | ${data.phone} | ${data.address} | Time: ${data.time} | Focus: ${data.desc} | Price: $${data.servicePrice}`
+    );
+  }
+
+  function loginAdmin() {
+    const pwd = prompt("Enter Admin Password:");
+    if (pwd === "2011 Logan Laflore") {
+      document.getElementById('adminPanel').classList.remove('hidden');
+      updateAdminView();
+    } else {
+      alert("Incorrect password.");
+    }
+  }
+
+  function updateAdminView() {
+    const list = document.getElementById('bookingList');
+    list.innerHTML = '';
+    bookings.forEach(b => {
+      const li = document.createElement('li');
+      li.innerText = `${b.time} - ${b.name} (${b.phone}) | Address: ${b.address} | Focus: ${b.desc}`;
+      list.appendChild(li);
+    });
+  }
+
+  function resetCounter() {
+    bookedClients = 0;
+    document.getElementById('clientCount').innerText = bookedClients;
+    alert("Daily capacity counter reset back to 0.");
+  }
+</script>
+</body>
+</html>
